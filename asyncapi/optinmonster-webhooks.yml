@@ -1,0 +1,139 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://optinmonster.com/docs/how-to-connect-optinmonster-with-a-webhook/ ;
+  https://optinmonster.com/integrations/webhooks/
+format: webhook-catalog
+asyncapi: false
+note: >-
+  OptinMonster publishes NO AsyncAPI document, so none is written here — an AsyncAPI is not
+  fabricated from prose. What it does publish is a single documented outbound webhook, captured
+  below as a webhook catalog with the payload keys quoted from the vendor's own documentation.
+  The surface is deliberately narrow: exactly one event (campaign form submission), one
+  destination URL configured per campaign, JSON since 2023-11-30, and no authentication. There is
+  no event bus, no streaming endpoint, no subscription API, and no event catalog beyond this.
+transport:
+  protocol: https
+  method: POST
+  content_type: application/json
+  since: '2023-11-30'
+  note: >-
+    Payloads were form-encoded before 2023-11-30 and are JSON after. The documentation gives the
+    cutover date explicitly.
+security:
+  authentication: none
+  signature: none
+  shared_secret: false
+  mtls: false
+  ip_allowlist: not published
+  vendor_statement: 'At this time we do not support Authentication for Webhook.'
+  note: >-
+    Deliveries are unauthenticated and unsigned. A receiver cannot verify that a POST originated
+    from OptinMonster, which means any endpoint accepting these must treat the payload as
+    untrusted and rely on URL secrecy alone. This is the single most consequential gap in the
+    event surface.
+delivery:
+  retries: not published
+  backoff: not published
+  ordering: not published
+  at_least_once: not published
+  timeout: not published
+  note: No delivery guarantee, retry policy, or timeout is documented.
+headers:
+- name: X-OptinMonster-Webhook-Version
+  description: Version of the webhook payload contract carried on each delivery.
+  documented: true
+events:
+- name: campaign.submission
+  description: >-
+    Fires when a visitor submits an OptinMonster campaign form (opt-in). This is the only event
+    OptinMonster emits over webhooks.
+  trigger: campaign form submission
+  configured_per: campaign
+  payload:
+    lead:
+      description: Core subscriber information captured by the form.
+      fields:
+      - email
+      - firstName
+      - lastName
+      - phone
+      - ipAddress
+      - referrer
+      - timestamp
+      - privacyConsent
+    lead_options:
+      description: Routing/annotation options configured on the campaign.
+      fields:
+      - list
+      - tags
+      - data
+      optional: true
+    campaign:
+      description: Identity of the campaign that produced the submission.
+      fields:
+      - id
+      - title
+    meta:
+      description: Custom form field values, keyed by field id.
+      fields: []
+      dynamic_keys: true
+    smart_tags:
+      description: Behavioral and contextual values resolved at submission time.
+      fields:
+      - day
+      - month
+      - year
+      - date
+      - page_url
+      - time_on_site
+      - coupon_code
+  note: >-
+    Field names quoted from the vendor documentation. The `meta` object is keyed by the numeric
+    custom-field id rather than by field name, so a receiver must resolve ids against the campaign
+    definition to interpret it.
+response_contract:
+  description: >-
+    Unusually, the webhook is bidirectional — the receiver's response can steer the campaign the
+    visitor is looking at.
+  fields:
+  - name: om_error_message
+    direction: receiver-to-optinmonster
+    description: >-
+      A custom error message returned by the receiving endpoint, which OptinMonster surfaces to the
+      visitor in the campaign. Turns the webhook into a synchronous validation hook.
+  - name: om_response_data
+    direction: receiver-to-optinmonster
+    description: Arbitrary data returned by the receiver for OptinMonster to carry forward.
+  note: >-
+    Because the receiver can block a submission with om_error_message, webhook latency and
+    availability sit on the visitor's conversion path.
+configuration:
+  where: OptinMonster campaign integration settings
+  docs: https://optinmonster.com/docs/how-to-connect-optinmonster-with-a-webhook/
+  marketing: https://optinmonster.com/integrations/webhooks/
+  subscription_api: false
+  note: >-
+    Webhook endpoints are configured in the app UI per campaign. There is no API to create, list,
+    or rotate webhook subscriptions — `GET /v2/webhooks` returns error code 1002 (method not
+    allowed), i.e. no readable webhook resource is exposed.
+other_event_surfaces:
+- name: JavaScript Events API
+  kind: client-side
+  description: >-
+    Roughly sixty `om.*` DOM events fired in the visitor's browser by the embed script — campaign
+    lifecycle, display-rule evaluation, form validation, conversion success/error, analytics
+    impressions and conversions. This is a real event surface but it is in-page only; it is not a
+    server-side subscription and cannot be consumed off-host.
+  docs: https://optinmonster.com/docs/optinmonster-javascript-events-api/
+  see: components/optinmonster-components.yml
+counts:
+  webhook_events: 1
+  asyncapi_documents: 0
+  client_side_events: 60
+gaps:
+- No AsyncAPI or any machine-readable event schema.
+- No authentication and no signature on webhook deliveries.
+- No retry, backoff, ordering, or delivery guarantee documented.
+- No webhook management API — subscriptions are UI-only.
+- Only one event; no lifecycle, campaign-change, or account events.

@@ -1,18 +1,98 @@
 aid: optinmonster
 name: OptinMonster
-description: 'OptinMonster is a company surfaced via the API Evangelist harvest backlog (source: marketing-integration-graph)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  OptinMonster is a lead-generation and conversion-optimization SaaS from Awesome Motive that
+  serves on-site campaigns — popups, floating bars, slide-ins, fullscreen fills, inline forms and
+  gamified spin-to-win wheels — targeted by display rules such as Exit Intent, page-level
+  targeting, geolocation, referrer and on-site behavior. Campaigns are built in a hosted visual
+  builder at app.optinmonster.com and rendered on customer sites by a JavaScript embed served from
+  the a.omappapi.com CDN. The platform exposes a private-key REST API at api.optinmonster.com
+  (v1 and v2) and a mirror at api.omwpapi.com used by the first-party WordPress plugin, covering
+  campaigns, leads, sites, integrations, revenue attribution and templates; a client-side
+  JavaScript Events API of roughly sixty `om.*` lifecycle events for hooking campaign display,
+  conversion and analytics; and an outbound webhook that POSTs captured lead data to a customer
+  endpoint. Leads are routed to more than sixty marketing platforms through built-in integrations.
 url: https://raw.githubusercontent.com/api-evangelist/optinmonster/refs/heads/main/apis.yml
+image: https://cdn.optinmonster.com/wp-content/uploads/2024/05/cropped-archie-1-192x192.png
 x-type: company
 x-source: harvest:marketing-integration-graph
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
 - Company
-apis: []
+- Lead Generation
+- Marketing
+- Conversion Optimization
+- Email Marketing
+- Popups
+- WordPress
+- Webhooks
+- SaaS
+- Marketing Automation
+apis:
+- aid: optinmonster-rest-api
+  name: OptinMonster REST API
+  description: >-
+    The OptinMonster application REST API. Versioned path segments (`/v1`, `/v2`) sit on
+    api.optinmonster.com and cover campaigns, leads, sites, site origins, integrations, account,
+    revenue attribution and the public template catalog. Authenticated with an account API key
+    supplied in the `X-OptinMonster-ApiKey` header (legacy `omapi-key` + user pairing is still
+    accepted). Responses are JSON; errors use a consistent
+    `{error, code, message, status}` envelope with numeric OptinMonster codes.
+  humanURL: https://optinmonster.com/docs/
+  baseURL: https://api.optinmonster.com/v2
+  tags:
+  - Lead Generation
+  - Campaigns
+  - Marketing
+  properties:
+  - type: Authentication
+    url: authentication/optinmonster-authentication.yml
+  - type: ErrorCatalog
+    url: errors/optinmonster-problem-types.yml
+  - type: Conventions
+    url: conventions/optinmonster-conventions.yml
+  - type: RateLimits
+    url: rate-limits/optinmonster-rate-limits.yml
+  - type: DataModel
+    url: data-model/optinmonster-data-model.yml
+- aid: optinmonster-wordpress-plugin-api
+  name: OptinMonster WordPress Plugin API
+  description: >-
+    The API host the first-party OptinMonster WordPress plugin calls (`OPTINMONSTER_API_URL`).
+    Serves the same versioned surface and error envelope as api.optinmonster.com — `v1/optins`,
+    `v1/verify`, `v2/sites`, `v2/sites/origin`, `v2/sites/{siteId}`, `v2/key/regenerate` and
+    `v2/revenue/{accountId}` — and additionally accepts the `OMAPI-Referer`, `OMAPI-Sender`,
+    `OMAPI-Site`, `OMAPI-Version` and `OMAPI-Plugins` context headers the plugin sends.
+  humanURL: https://wordpress.org/plugins/optinmonster/
+  baseURL: https://api.omwpapi.com
+  tags:
+  - WordPress
+  - Lead Generation
+  properties:
+  - type: SourceCode
+    url: https://plugins.svn.wordpress.org/optinmonster/trunk/
+  - type: ChangeLog
+    url: https://plugins.svn.wordpress.org/optinmonster/trunk/CHANGELOG.md
+- aid: optinmonster-javascript-events-api
+  name: OptinMonster JavaScript Events API
+  description: >-
+    A client-side event API exposed by the OptinMonster embed script (served from
+    a.omappapi.com/app/js/api.min.js). Roughly sixty documented `om.*` events fire across campaign
+    initialization, display-rule evaluation, show/close, view changes, form validation, conversion
+    success/error, analytics impressions and conversions, and campaign actions. Handlers are bound
+    with `document.addEventListener` and receive the campaign object, letting integrators suppress
+    campaigns, mutate markup, or forward conversions to their own analytics.
+  humanURL: https://optinmonster.com/docs/optinmonster-javascript-events-api/
+  baseURL: https://a.omappapi.com
+  tags:
+  - JavaScript
+  - Events
+  - Embedded
+  properties:
+  - type: Components
+    url: components/optinmonster-components.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -21,8 +101,73 @@ maintainers:
 common:
 - type: Website
   url: https://optinmonster.com/
+- type: Documentation
+  url: https://optinmonster.com/docs/
+- type: DeveloperPortal
+  url: https://optinmonster.com/categories/docs/extending/
+- type: GettingStarted
+  url: https://optinmonster.com/docs/getting-started-optinmonster-wordpress-checklist/
+- type: Support
+  url: https://optinmonster.com/support/
+- type: Blog
+  url: https://optinmonster.com/blog/
+- type: Pricing
+  url: https://optinmonster.com/pricing/
+- type: SignUp
+  url: https://app.optinmonster.com/
+- type: TermsOfService
+  url: https://optinmonster.com/terms/
+- type: PrivacyPolicy
+  url: https://optinmonster.com/privacy/
+- type: Security
+  url: https://optinmonster.com/security/
+- type: Packages
+  url: packages/optinmonster-packages.yml
+- type: SDKs
+  url: packages/optinmonster-packages.yml
+- type: LLMsTxt
+  url: llms/optinmonster-llms.txt
+- type: Webhooks
+  url: asyncapi/optinmonster-webhooks.yml
+- type: ChangeLog
+  url: changelog/optinmonster-changelog.yml
+- type: Lifecycle
+  url: lifecycle/optinmonster-lifecycle.yml
+- type: Plans
+  url: plans/optinmonster-plans-pricing.yml
+- type: Conformance
+  url: conformance/optinmonster-conformance.yml
+- type: DomainSecurity
+  url: security/optinmonster-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/optinmonster-vulnerability-disclosure.yml
+- type: Components
+  url: components/optinmonster-components.yml
 x-vouched-by:
 - Drip
 - MailerLite
 - Ontraport
 x-vouch-count: 3
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: null
+  detail: >-
+    A real, live REST API was found and mapped by probe (api.optinmonster.com v1/v2 plus the
+    api.omwpapi.com mirror named in the first-party WordPress plugin source), along with a
+    provider-published llms.txt, a documented outbound webhook, a dated plugin changelog and
+    published pricing. OptinMonster publishes no OpenAPI and no public API reference, so the
+    contract here was recovered from live probes and first-party plugin code rather than from a
+    spec.
+  evidence:
+  - url: https://api.optinmonster.com/v2/campaigns
+    status: 401
+  - url: https://api.optinmonster.com/v2/templates
+    status: 200
+  - url: https://optinmonster.com/llms.txt
+    status: 200
+  checked: '2026-08-12'

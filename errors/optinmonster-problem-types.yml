@@ -1,0 +1,107 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  live unauthenticated requests to https://api.optinmonster.com/v1|v2/* and
+  https://api.omwpapi.com/v1|v2/*
+format: vendor-json
+rfc9457: false
+note: >-
+  OptinMonster publishes no error reference and no OpenAPI, so this catalog is built entirely from
+  responses observed live on 2026-08-12. The API returns a consistent, well-formed JSON error
+  envelope with a numeric vendor code that is distinct from the HTTP status — a genuinely useful
+  error contract that simply is not documented anywhere. Content-type is `application/json`, NOT
+  `application/problem+json`, so this is not RFC 9457. Only codes actually observed are listed;
+  the 1000-series numbering implies more exist behind authentication, and they are not guessed at
+  here.
+envelope:
+  media_type: application/json
+  shape:
+    error: boolean — always true on an error response
+    code: integer — the OptinMonster vendor error code
+    message: string — human-readable description
+    status: integer — mirrors the HTTP status code
+  example_shape: '{"error":true,"code":1001,"message":"...","status":404}'
+  fields_absent:
+  - type
+  - title
+  - detail
+  - instance
+  - trace_id
+problem_types:
+- code: 1001
+  http_status: 404
+  title: Route or resource not found
+  message: The requested route or resource could not be found.
+  meaning: >-
+    The path does not exist on this API version. Frequently means the caller used the wrong version
+    segment — /v1/campaigns returns 1001 while /v2/campaigns returns 1004, because campaigns only
+    exists on v2.
+  remediation: >-
+    Check the version segment before the resource. v1 carries `optins` and `verify`; the campaign,
+    lead, site and integration resources are v2.
+  observed:
+  - url: https://api.optinmonster.com/v1/campaigns
+    http_status: 404
+  - url: https://api.optinmonster.com/v2/
+    http_status: 404
+- code: 1002
+  http_status: 405
+  title: HTTP method not allowed on this route
+  message: 'The HTTP request method performed is not allowed on this route. Allowed: OPTIONS'
+  meaning: >-
+    The route exists at the routing layer but does not accept the method used. In practice a GET
+    against a collection that is write-only or does not exist as a readable collection returns this
+    with `Allowed: OPTIONS`, which is the CORS preflight registration rather than a real read
+    method — so 1002 is NOT reliable evidence that a readable resource exists.
+  remediation: >-
+    Read the `Allowed:` list inside the message string; there is no `Allow` response header
+    carrying it.
+  observed:
+  - url: https://api.optinmonster.com/v2/accounts
+    http_status: 405
+  - url: https://api.optinmonster.com/v2/webhooks
+    http_status: 405
+  - url: https://api.optinmonster.com/v2/reports
+    http_status: 405
+- code: 1004
+  http_status: 401
+  title: Authentication credentials missing
+  message: The required authentication credentials are missing.
+  meaning: >-
+    No `X-OptinMonster-ApiKey` header (or legacy key/user pair) was supplied. This response also
+    confirms the route exists and is readable with credentials.
+  remediation: >-
+    Send the account API key in the `X-OptinMonster-ApiKey` header. See
+    authentication/optinmonster-authentication.yml.
+  observed:
+  - url: https://api.optinmonster.com/v2/campaigns
+    http_status: 401
+  - url: https://api.optinmonster.com/v2/leads
+    http_status: 401
+  - url: https://api.optinmonster.com/v2/sites
+    http_status: 401
+  - url: https://api.omwpapi.com/v1/optins
+    http_status: 401
+webhook_error_controls:
+  note: >-
+    The outbound webhook has its own error channel, running the opposite direction: the receiving
+    endpoint returns these to OptinMonster.
+  source: https://optinmonster.com/docs/how-to-connect-optinmonster-with-a-webhook/
+  fields:
+  - name: om_error_message
+    description: Custom error message the receiver returns, surfaced to the campaign visitor.
+  - name: om_response_data
+    description: Arbitrary data the receiver returns for OptinMonster to carry forward.
+counts:
+  documented_by_provider: 0
+  observed: 3
+  http_statuses_observed:
+  - 401
+  - 404
+  - 405
+gaps:
+- No published error reference. Every code here was recovered by probing.
+- Not RFC 9457 — no `application/problem+json`, no `type` URI, no `instance`.
+- No correlation/request id in the error body or in any response header.
+- 429 was never observed and no rate-limit documentation exists; see
+  rate-limits/optinmonster-rate-limits.yml.

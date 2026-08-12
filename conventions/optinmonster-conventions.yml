@@ -1,0 +1,150 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  errors/optinmonster-problem-types.yml ;
+  authentication/optinmonster-authentication.yml ;
+  https://plugins.svn.wordpress.org/optinmonster/trunk/OMAPI/Api.php ;
+  live probes of https://api.optinmonster.com/v2/*
+note: >-
+  OptinMonster publishes no API conventions document and no OpenAPI. This is derived from the
+  first-party WordPress client's request builder plus live observation. Several sections below are
+  recorded as ABSENT rather than omitted — an undocumented convention is a finding, and the gaps
+  here (no idempotency, no request id, no rate-limit signal, no pagination contract) are the
+  substance of this artifact. No `Idempotency` pointer is emitted in apis.yml because no
+  idempotency mechanism exists to point at.
+auth:
+  style: api-key-header
+  header: X-OptinMonster-ApiKey
+  legacy: 'omapi-key + api user pair, carried in the request rather than a header'
+  bearer: false
+  oauth2: false
+  see: authentication/optinmonster-authentication.yml
+versioning:
+  style: uri-path-segment
+  pattern: https://{host}/{version}/{resource}
+  versions:
+  - v1
+  - v2
+  current: v2
+  evidence: >-
+    OMAPI/Api.php line 365 builds every URL as `$this->base . '/' . $this->version . '/' .
+    $this->route`. v1 and v2 are both live and carry DIFFERENT resources — v1 has `optins` and
+    `verify`, v2 has `sites`, `campaigns`, `leads`, `integrations`, `key/regenerate`,
+    `revenue/{accountId}`, `templates`. They are not a deprecation ladder; they are a split
+    surface, and the same client calls both in one session.
+  header_negotiation: false
+  media_type_versioning: false
+  see: lifecycle/optinmonster-lifecycle.yml
+hosts:
+  note: >-
+    The same versioned surface and the identical error envelope are served from two different
+    registrable domains. This is a real integration hazard: an agent that discovers one host will
+    not learn the other exists, and neither host is named in any public documentation.
+  application: https://api.optinmonster.com
+  wordpress_plugin: https://api.omwpapi.com
+  app: https://app.optinmonster.com
+  cdn_frontend: https://a.omappapi.com
+  cdn_admin: https://a.omwpapi.com
+  shareable_links: https://app.monstercampaigns.com
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  note: >-
+    No idempotency key header is sent by the first-party client, allowed by the CORS preflight, or
+    mentioned anywhere in the docs. Retries of a POST are not deduplicated by any published
+    mechanism. This is the reason no `Idempotency` pointer appears in apis.yml.
+pagination:
+  documented: false
+  style: unknown
+  params: []
+  response_fields: []
+  note: >-
+    No pagination contract is published, and the one anonymous collection observed
+    (`GET /v2/templates`) returns an UNPAGINATED bare JSON array — 697 objects, 1.27 MB in a single
+    response, with no envelope, no cursor, no total, and no link header. Whether the authenticated
+    collections (`/v2/campaigns`, `/v2/leads`) page at all could not be determined without
+    credentials.
+response_envelope:
+  success:
+    style: bare
+    note: >-
+      Successful responses are the resource itself — `GET /v2/templates` returns a top-level JSON
+      array with no `data` wrapper and no metadata block.
+  error:
+    style: enveloped
+    shape: '{error, code, message, status}'
+    see: errors/optinmonster-problem-types.yml
+    note: >-
+      Asymmetric: errors are enveloped, successes are not. A client cannot use one parse path for
+      both.
+request_id:
+  supported: false
+  header: null
+  note: >-
+    No correlation or request id is returned in any response header or error body. The only
+    per-request identifier observed is Cloudflare's `cf-ray`, which is edge infrastructure, not an
+    OptinMonster application trace id, and is not referenced by the vendor for support.
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: unknown
+  note: >-
+    No `X-RateLimit-*`, `RateLimit-*` or `Retry-After` header was returned on any observed
+    response, authenticated or anonymous. See rate-limits/optinmonster-rate-limits.yml.
+content_negotiation:
+  request: application/json
+  response: application/json
+  compression: 'gzip (vary: Accept-Encoding)'
+cors:
+  allow_origin: '*'
+  allow_methods:
+  - GET
+  - HEAD
+  - OPTIONS
+  - POST
+  - PUT
+  - DELETE
+  allow_headers_documented: false
+  note: >-
+    `access-control-allow-origin: *` on the API host. The preflight's allow-headers list is
+    currently the most complete public description of the API's own credential surface, which says
+    something about the state of the documentation.
+  evidence:
+    url: https://api.optinmonster.com/v2/campaigns
+    method: OPTIONS
+    http_status: 200
+    fetched: '2026-08-12'
+field_expansion:
+  supported: unknown
+  note: Not documented; no `expand`/`fields` parameter observed.
+metadata:
+  supported: true
+  note: >-
+    Campaign submissions carry a `meta` object keyed by custom field id, and `lead_options.data`
+    carries arbitrary key/values — both visible in the documented webhook payload. This is a
+    lead-level custom-data facility, not a general API metadata convention.
+  see: asyncapi/optinmonster-webhooks.yml
+telemetry_headers:
+  note: >-
+    The first-party client identifies itself with a set of OMAPI-* headers rather than a
+    User-Agent convention. Third-party integrators are not told to send them.
+  headers:
+  - OMAPI-Referer
+  - OMAPI-Sender
+  - OMAPI-Site
+  - OMAPI-Version
+  - OMAPI-Plugins
+cross_links:
+  errors: errors/optinmonster-problem-types.yml
+  authentication: authentication/optinmonster-authentication.yml
+  lifecycle: lifecycle/optinmonster-lifecycle.yml
+  rate_limits: rate-limits/optinmonster-rate-limits.yml
+  webhooks: asyncapi/optinmonster-webhooks.yml
+gaps:
+- No idempotency mechanism of any kind.
+- No pagination contract; the one public collection returns 697 objects unpaginated.
+- No request/correlation id for support or tracing.
+- No rate-limit headers and no documented limits.
+- Success and error responses use different shapes.
+- Two production API hosts serve the same surface and neither is named in public docs.

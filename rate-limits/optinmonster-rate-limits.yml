@@ -1,0 +1,61 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  live response headers from https://api.optinmonster.com/v2/templates and
+  https://api.optinmonster.com/v2/campaigns ; docs search of https://optinmonster.com/docs/
+limit_count: 0
+note: >-
+  OptinMonster publishes no rate limits for its REST API, and returns no rate-limit signal at
+  runtime. This is an honest zero, verified two ways rather than assumed: (1) the help centre has
+  no rate-limit, quota or throttling article — the developer-facing "Extending" category covers
+  only the JavaScript Events API, Dynamic Text Replacement and custom JS/CSS; (2) repeated live
+  requests to both an anonymous endpoint and an authenticated-gated endpoint returned no
+  `X-RateLimit-*`, no `RateLimit-*`, and no `Retry-After` header, and never produced a 429. An
+  agent integrating this API has no runtime signal to back off on and must treat throttling as
+  unobservable.
+limits: []
+headers:
+  observed: []
+  x_ratelimit_limit: false
+  x_ratelimit_remaining: false
+  x_ratelimit_reset: false
+  ratelimit_standard: false
+  retry_after: false
+status_on_exhaustion: unknown
+probes:
+- url: https://api.optinmonster.com/v2/templates
+  method: GET
+  requests: 3
+  http_status: 200
+  rate_limit_headers: none
+  fetched: '2026-08-12'
+- url: https://api.optinmonster.com/v2/campaigns
+  method: GET
+  http_status: 401
+  rate_limit_headers: none
+  fetched: '2026-08-12'
+  response_headers_seen:
+  - date
+  - content-type
+  - content-length
+  - access-control-allow-origin
+  - access-control-allow-headers
+  - x-user-agent
+  - x-cache-config
+  - vary
+  - server
+  - cf-cache-status
+  - nel
+  - report-to
+  - cf-ray
+plan_quotas:
+  note: >-
+    OptinMonster does meter the PRODUCT rather than the API: every paid tier carries a monthly
+    campaign-impression allowance (2,500 / 10,000 / 25,000 / 100,000). That is a billing quota on
+    campaign views served by the embed script, not a request-rate limit on the REST API, and it is
+    not surfaced through any API response header. Recorded in plans/optinmonster-plans-pricing.yml.
+  see: plans/optinmonster-plans-pricing.yml
+gaps:
+- No published rate limits.
+- No rate-limit response headers, so no runtime backoff signal.
+- No documented 429 behavior or retry guidance.

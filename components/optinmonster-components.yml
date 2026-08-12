@@ -1,0 +1,167 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://optinmonster.com/docs/optinmonster-javascript-events-api/ ;
+  https://optinmonster.com/docs/using-the-optinmonster-api-with-single-page-applications/ ;
+  https://optinmonster.com/docs/optinmonster-dynamic-text-replacement-api/ ;
+  https://a.omappapi.com/app/js/api.min.js ;
+  https://plugins.svn.wordpress.org/optinmonster/trunk/
+note: >-
+  OptinMonster's primary developer surface is not the REST API — it is a client-side embed. The
+  loader script renders hosted campaigns into the customer's page and exposes a large DOM event
+  API for hooking their lifecycle. This is the component family developers actually integrate
+  against, and it is the best-documented part of the platform.
+families:
+- name: Campaign embed loader
+  kind: script-tag
+  description: >-
+    The single loader script that bootstraps OptinMonster on a customer site. It fetches the
+    account's campaigns, evaluates display rules client-side, and renders popups, floating bars,
+    slide-ins, fullscreen fills, inline forms and gamified wheels.
+  loader:
+    url: https://a.omappapi.com/app/js/api.min.js
+    admin_url: https://a.omwpapi.com/app/js/api.min.js
+    async: true
+    versioned: false
+    http_status: 200
+    size_bytes: 46243
+    build: 'Thu, 06 Aug 2026 17:29:04 GMT'
+    fetched: '2026-08-12'
+  note: >-
+    The loader URL carries no version segment — every site executes whatever build the CDN
+    currently serves, with no way to pin. See packages/optinmonster-packages.yml.
+  global: om
+- name: JavaScript Events API
+  kind: dom-events
+  description: >-
+    Approximately sixty documented `om.*` events dispatched on `document`, bound with
+    `document.addEventListener`. Handlers receive the campaign object and can suppress a campaign,
+    mutate its markup, or forward conversions to third-party analytics.
+  docs: https://optinmonster.com/docs/optinmonster-javascript-events-api/
+  binding: document.addEventListener('om.Campaign.show', handler)
+  groups:
+  - group: initialization
+    events:
+    - om.Api.init
+    - om.Main.init
+    - om.Main.parseCampaigns
+    - om.Campaigns.init
+    - om.Types.init
+    - om.Analytics.init
+    - om.Sites.init
+    - om.Html.init
+    - om.Iframes.init
+    - om.Listeners.init
+    - om.Lock.init
+    - om.SoundEffects.init
+    - om.Tags.init
+    - om.Dtr.init
+  - group: display
+    events:
+    - om.Campaign.init
+    - om.Campaign.normalize
+    - om.Campaign.canLoad
+    - om.DisplayRules.init
+    - om.DisplayRules.afterRun
+    - om.DisplayRules.actions
+    - om.Ruleset.init
+    - om.Group.init
+    - om.Rule.init
+    - om.WebFonts.init
+    - om.Html.images
+    - om.Campaign.startShow
+    - om.Campaign.canShow
+    - om.Campaign.show
+    - om.Html.show
+    - om.Html.customVars
+    - om.Html.shortcodes
+    - om.Html.append.before
+    - om.Html.scripts
+    - om.Html.inlineScripts
+    - om.Html.append.after
+    - om.Form.init
+    - om.PoweredBy.init
+    - om.Styles.init
+    - om.Actions.init
+    - om.Action.init
+    - om.Countdown.init
+    - om.Campaign.load
+    - om.Campaign.afterShow
+  - group: close
+    events:
+    - om.Campaign.startClose
+    - om.Campaign.close
+    - om.Campaign.afterClose
+    - om.Campaign.cleanup
+    - om.Campaign.afterCleanup
+  - group: view-change
+    events:
+    - om.Campaign.changeView
+    - om.Campaign.changeView.done
+  - group: conversion
+    events:
+    - om.Optin.init
+    - om.Form.validate
+    - om.Optin.init.submit
+    - om.Optin.error
+    - om.Optin.success
+  - group: analytics
+    events:
+    - om.Analytics.track
+    - om.Analytics.impression
+    - om.Analytics.conversion
+  - group: actions
+    events:
+    - om.Action.redirect
+    - om.Action.view
+    - om.Action.close
+    - om.Action.window
+    - om.Action.refresh
+  - group: misc
+    events:
+    - om.Campaign.reset
+    - om.Styles.positionPopup
+  cancellable_events:
+  - om.Campaign.canLoad
+  - om.Campaign.canShow
+  - om.Form.validate
+  note: >-
+    The `can*` events are the documented suppression hook — returning false from a handler prevents
+    the campaign loading or showing. This is how integrators exclude campaigns per page.
+- name: Dynamic Text Replacement API
+  kind: templating
+  description: >-
+    Client-side smart tags that substitute values into campaign copy at render time — URL query
+    parameters, referrer, date/time, geolocation and custom variables — so one campaign can be
+    personalized per visitor without a server call.
+  docs: https://optinmonster.com/docs/optinmonster-dynamic-text-replacement-api/
+- name: Single-page application / headless support
+  kind: integration-pattern
+  description: >-
+    Documented pattern for driving the embed inside SPAs and headless WordPress front-ends, where
+    route changes do not trigger a page load and campaigns must be re-parsed manually.
+  docs: https://optinmonster.com/docs/using-the-optinmonster-api-with-single-page-applications/
+- name: WordPress plugin UI
+  kind: host-platform-plugin
+  description: >-
+    First-party WordPress plugin providing an admin campaign manager, a Gutenberg block, shortcodes,
+    a WooCommerce coupon metabox, and per-post output settings. Not a component library for
+    third-party developers, but it is the officially supported embedding surface on WordPress.
+  source: https://plugins.svn.wordpress.org/optinmonster/trunk/
+  package: packages/optinmonster-packages.yml
+frameworks:
+  react: false
+  vue: false
+  angular: false
+  web_components: false
+  note: >-
+    No framework-specific component packages are published. The Vue build inside the WordPress
+    plugin (`/vue/`) is the plugin's own admin UI, not a distributable library.
+counts:
+  families: 5
+  documented_events: 60
+gaps:
+- Loader script is unpinned and unversioned; no SRI hash published.
+- No npm-distributed component or framework wrapper.
+- Event payload shapes are not documented — only event names are.
+- No TypeScript types published for the `om` global.

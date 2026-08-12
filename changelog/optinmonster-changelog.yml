@@ -1,0 +1,112 @@
+generated: '2026-08-12'
+method: searched
+source: https://plugins.svn.wordpress.org/optinmonster/trunk/CHANGELOG.md
+scheme: semver
+current_version: 2.16.24
+current_version_date: '2026-05-22'
+covers: WordPress plugin
+note: >-
+  The only dated, structured changelog OptinMonster publishes is the WordPress plugin's
+  CHANGELOG.md in the WordPress.org SVN trunk (mirrored into the plugin's readme.txt). There is NO
+  changelog for the platform or for the REST API — optinmonster.com/changelog/ returns 404, and API
+  version changes (v1 vs v2 resource moves, host migrations) are not announced anywhere. Two
+  entries below are notable as the closest thing to an API changelog that exists: 2.16.16 records
+  "Updated URL used for OptinMonster API calls" — the undocumented migration of the plugin's API
+  base to api.omwpapi.com — and 2.16.23 is published as "Unreleased", a version number burned in
+  public with no content. Product announcements otherwise appear as marketing blog posts.
+entries:
+- version: 2.16.24
+  date: '2026-05-22'
+  breaking: false
+  highlights:
+  - Campaign filtering by status and folder, with new sorting options
+  - Fixed cloned campaigns not displaying on WordPress sites
+  - Fixed a PHP 8.4 compatibility issue in the Rules exception handler
+  - WordPress 6.9 compatibility
+  - WooCommerce 10.5 compatibility
+  additions:
+  - campaign filtering by status and folder
+  fixes:
+  - cloned campaign display
+  - PHP 8.4 Rules exception handler
+- version: 2.16.23
+  date: '2026-03-12'
+  breaking: false
+  highlights:
+  - Unreleased
+  note: Version number published with no shipped content.
+- version: 2.16.22
+  date: '2025-11-19'
+  breaking: false
+  highlights:
+  - Promotional updates to the dashboard
+- version: 2.16.21
+  date: '2025-10-03'
+  breaking: false
+  highlights:
+  - Maintenance updates
+  - Preparation for ShareASale to AWIN migration
+- version: 2.16.20
+  date: '2025-07-24'
+  breaking: false
+  highlights:
+  - Maintenance updates
+- version: 2.16.19
+  date: '2025-03-31'
+  breaking: false
+  highlights:
+  - Improved support for the WPML plugin
+- version: 2.16.18
+  date: '2025-03-26'
+  breaking: false
+  highlights:
+  - Fixed a scenario where the wrong screenshot may load
+- version: 2.16.17
+  date: '2025-03-26'
+  breaking: false
+  highlights:
+  - Improvements to campaign screenshots
+  - Blocksy theme compatibility enhancements
+- version: 2.16.16
+  date: '2025-02-24'
+  breaking: false
+  api_relevant: true
+  highlights:
+  - Updated URL used for OptinMonster API calls
+  - WooCommerce 9.6 compatibility
+  - Performance improvements by preventing unnecessary API calls in editor contexts
+  - Gutenberg block iframe compatibility
+  note: >-
+    The only API-surface change ever recorded in a public OptinMonster changelog. Corresponds to
+    the plugin's OPTINMONSTER_API_URL moving to https://api.omwpapi.com. No detail on whether the
+    prior host remains supported.
+- version: 2.16.15
+  date: '2025-02-03'
+  breaking: false
+  highlights:
+  - WordPress 6.7 compatibility
+counts:
+  entries_recorded: 10
+  window: 2025-02-03 to 2026-05-22
+  breaking_changes_in_window: 0
+  api_relevant_entries: 1
+surfaces:
+- name: WordPress plugin changelog
+  url: https://plugins.svn.wordpress.org/optinmonster/trunk/CHANGELOG.md
+  dated: true
+  structured: true
+  http_status: 200
+- name: WordPress.org plugin page changelog
+  url: https://wordpress.org/plugins/optinmonster/#developers
+  dated: true
+  structured: true
+- name: Platform changelog
+  url: https://optinmonster.com/changelog/
+  http_status: 404
+  exists: false
+- name: API changelog
+  exists: false
+gaps:
+- No platform or REST API changelog. API changes are not announced.
+- No RSS/Atom or machine-readable feed for the plugin changelog.
+- Release cadence has slowed markedly — one shipped release between 2025-11 and 2026-05.

@@ -1,0 +1,103 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://api.wordpress.org/plugins/info/1.0/optinmonster.json ;
+  https://registry.npmjs.org ; https://pypi.org ; https://packagist.org ;
+  https://a.omappapi.com/app/js/api.min.js
+note: >-
+  OptinMonster ships no client SDK to any language package registry. npm (`optinmonster`,
+  `@optinmonster/js`, `optin-monster`), PyPI, Packagist and crates.io all return not-found, and
+  there is no first-party GitHub organization (github.com/optinmonster is 404; the parent is
+  github.com/awesomemotive, which carries no OptinMonster client library). The only two
+  first-party distributions are the WordPress plugin on WordPress.org and the unpinned JavaScript
+  embed on the OptinMonster CDN. Everything on the registries under this name is third-party
+  (Zapier/Mautic bridges, mirrors of the WordPress SVN repo).
+packages:
+- name: optinmonster
+  language: php
+  registry: wordpress.org
+  official: true
+  url: https://wordpress.org/plugins/optinmonster/
+  source: https://plugins.svn.wordpress.org/optinmonster/trunk/
+  version: 2.16.24
+  published: '2026-05-22'
+  description: >-
+    "Popup Builder & Popup Maker for WordPress – OptinMonster Email Marketing and Lead Generation".
+    The first-party WordPress plugin. Wraps the OptinMonster REST API (OMAPI_Api), embeds the
+    campaign loader, and provides WooCommerce/EDD/MemberPress display rules. Requires WordPress
+    5.0+, tested to 6.9.7.
+  note: >-
+    Published by Awesome Motive (WordPress.org profile `smub` / Syed Balkhi). Distributed via
+    WordPress.org SVN only — there is no public git mirror maintained by the vendor. Version and
+    date read from the WordPress.org plugin metadata API.
+- name: api.min.js
+  language: javascript
+  registry: cdn
+  official: true
+  url: https://a.omappapi.com/app/js/api.min.js
+  source: null
+  version: null
+  published: '2026-08-06'
+  description: >-
+    The OptinMonster campaign embed / loader script. Rendered on customer sites, it parses the
+    account's campaigns, evaluates display rules, renders campaigns, and exposes the `om.*`
+    JavaScript Events API.
+  note: >-
+    UNPINNED CDN distribution — the URL carries no version segment and floats to whatever the
+    origin currently serves, so a consumer cannot tell which build they are executing. There is no
+    registry metadata endpoint to query (no npm/jsDelivr/unpkg package). `version` is therefore
+    null, honestly. The only build identifier available is the banner comment in the served file:
+    `/*! api - Thu, 06 Aug 2026 17:29:04 GMT */` — recorded here as `published`. Observed 200,
+    46,243 bytes, content-type application/javascript, on 2026-08-12.
+  x-evidence:
+    fetched: '2026-08-12'
+    url: https://a.omappapi.com/app/js/api.min.js
+    http_status: 200
+    content_type: application/javascript
+    size_bytes: 46243
+    build_banner: 'api - Thu, 06 Aug 2026 17:29:04 GMT'
+- name: api.min.js (admin build)
+  language: javascript
+  registry: cdn
+  official: true
+  url: https://a.omwpapi.com/app/js/api.min.js
+  source: null
+  version: null
+  published: null
+  description: >-
+    The same loader served from the WordPress-admin CDN host. The plugin selects between
+    a.omwpapi.com (wp-admin context) and a.omappapi.com (frontend) via `OPTINMONSTER_CDN_URL`.
+  note: >-
+    Also unpinned; no registry metadata endpoint exists. Recorded because the plugin source names
+    it as a distinct distribution host.
+registries_checked:
+- registry: npm
+  queries:
+  - optinmonster
+  - '@optinmonster/js'
+  - optin-monster
+  result: not-found
+- registry: pypi
+  queries:
+  - optinmonster
+  result: not-found
+  http_status: 404
+- registry: packagist
+  queries:
+  - optinmonster
+  result: not-found
+  total: 0
+- registry: wordpress.org
+  queries:
+  - optinmonster
+  result: found
+- registry: github
+  queries:
+  - orgs/optinmonster
+  result: not-found
+  http_status: 404
+counts:
+  total: 3
+  official: 3
+  with_version: 1
+  unpinned: 2

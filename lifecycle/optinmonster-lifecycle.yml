@@ -1,0 +1,102 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://optinmonster.com/terms/ ; https://plugins.svn.wordpress.org/optinmonster/trunk/ ;
+  live probes of https://api.optinmonster.com and https://status.optinmonster.com
+note: >-
+  OptinMonster publishes no API versioning policy, no deprecation policy, no SLA and no status
+  page. Neither a `StatusPage` nor a `Deprecation` pointer is emitted in apis.yml, because neither
+  surface exists — this artifact records the absence with the probes that established it. The one
+  real lifecycle signal is the URI version segment, and even that is not a ladder: v1 and v2 are a
+  split surface that a single client calls simultaneously.
+versioning:
+  policy_published: false
+  policy_url: null
+  style: uri-path-segment
+  versions:
+  - version: v1
+    status: live
+    resources_observed:
+    - optins
+    - verify
+    note: >-
+      Still in active use by the current first-party WordPress plugin (2.16.24). Not deprecated,
+      not announced as legacy.
+  - version: v2
+    status: live
+    current: true
+    resources_observed:
+    - campaigns
+    - leads
+    - sites
+    - sites/origin
+    - sites/{siteId}
+    - integrations
+    - account
+    - me
+    - key/regenerate
+    - revenue/{accountId}
+    - templates
+  note: >-
+    v1 and v2 are not successive generations. The vendor's own client calls both in one session
+    because the resources are partitioned between them. There is no published migration path
+    because there is nothing to migrate.
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No RFC 8594 `Sunset` or `Deprecation` header was observed on any response. No deprecation
+    schedule, notice period, or end-of-life commitment is published for either API version. The
+    legacy `omapi-key` + username credential pair is described in the help centre as no longer
+    required, but is not formally deprecated and carries no removal date.
+sla:
+  published: false
+  uptime_commitment: null
+  credits: null
+  note: >-
+    No SLA is published. The Terms of Service is a standard SaaS subscription agreement with no
+    uptime or availability commitment for the API.
+status_page:
+  exists: false
+  probes:
+  - url: https://status.optinmonster.com/
+    http_status: 501
+    fetched: '2026-08-12'
+  - url: https://optinmonster.com/status/
+    http_status: 404
+    fetched: '2026-08-12'
+  note: >-
+    status.optinmonster.com resolves but returns 501 — the subdomain is configured with no service
+    behind it. There is no incident history, uptime page, or subscribe-to-updates channel. No
+    `StatusPage` pointer is emitted.
+support_lifecycle:
+  wordpress_plugin:
+    current_version: 2.16.24
+    released: '2026-05-22'
+    requires_wordpress: '5.0'
+    tested_to_wordpress: 6.9.7
+    note: >-
+      Actively maintained against current WordPress. Release cadence has slowed: one shipped
+      release in the twelve months to 2026-05.
+maintenance_signals:
+  first_party_sdk_current: true
+  first_party_sdk_last_release: '2026-05-22'
+  embed_script_last_build: '2026-08-06'
+  note: >-
+    Both first-party distributions are current — the CDN embed was rebuilt six days before this
+    probe. There is no abandonment signal here; the gap is documentation and policy, not
+    maintenance.
+cross_links:
+  changelog: changelog/optinmonster-changelog.yml
+  conventions: conventions/optinmonster-conventions.yml
+  packages: packages/optinmonster-packages.yml
+gaps:
+- No versioning policy document.
+- No deprecation policy, no Sunset/Deprecation headers, no notice period.
+- No SLA or uptime commitment.
+- No status page — status.optinmonster.com returns 501.
+- No announced support window for v1.

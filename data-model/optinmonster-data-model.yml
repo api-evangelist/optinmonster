@@ -1,0 +1,272 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  live response body of https://api.optinmonster.com/v2/templates (697 objects, unauthenticated) ;
+  route set observed on https://api.optinmonster.com/v1|v2/* ;
+  https://plugins.svn.wordpress.org/optinmonster/trunk/OMAPI/ ;
+  documented webhook payload at
+  https://optinmonster.com/docs/how-to-connect-optinmonster-with-a-webhook/
+confidence: medium
+note: >-
+  There is no OpenAPI and no object reference to derive from, so this entity graph is built from
+  three grounded sources rather than a spec: the ONE endpoint that answers anonymously
+  (`GET /v2/templates`, whose 697 objects give a complete, real field list for Template and its
+  three taxonomies), the route set recovered by probing plus the first-party WordPress client, and
+  the documented webhook payload for the Lead shape. Entities marked `fields_known: false` are
+  known to EXIST — their routes return 401 rather than 404 — but their attributes could not be read
+  without credentials and are deliberately not invented. Relationships carry a per-row confidence.
+entities:
+- name: Template
+  resource: /v2/templates
+  access: public
+  fields_known: true
+  record_count_observed: 697
+  id_type: string-slug
+  id_example: popup-canvas
+  fields:
+  - name: id
+    type: string
+  - name: slug
+    type: string
+  - name: name
+    type: string
+  - name: status
+    type: string
+  - name: type
+    type: string
+    note: campaign type — popup, floating bar, slide-in, fullscreen, inline, gamified
+  - name: om_account_id
+    type: integer
+    reference: Account
+  - name: conversion_rate
+    type: string
+  - name: mobile
+    type: integer
+  - name: image_url
+    type: string
+  - name: screenshot_url
+    type: string
+  - name: demo_campaign_slug
+    type: string
+    reference: Campaign
+  - name: staging_campaign_slug
+    type: string
+    reference: Campaign
+  - name: inspired_by
+    type: string
+  - name: playbook_description
+    type: string
+  - name: is_playbook
+    type: integer
+  - name: increase
+    type: integer
+  - name: order
+    type: integer
+  - name: premium
+    type: array
+    note: array of feature slugs gating the template, e.g. countdown-element
+  - name: features
+    type: array
+  - name: seasons
+    type: array
+  - name: keywords
+    type: array
+  - name: rules
+    type: array
+  - name: created_at
+    type: string
+  - name: updated_at
+    type: string
+  - name: release_on
+    type: string
+- name: Goal
+  access: embedded
+  fields_known: true
+  embedded_in: Template.goals
+  fields:
+  - name: id
+    type: integer
+  - name: name
+    type: string
+  - name: created
+    type: string
+  - name: updated
+    type: string
+  values_observed:
+  - Grow My Email List
+  - Reduce Abandoning Visitors
+  - Redirect Visitors
+  - Make Time Sensitive Offers
+- name: Category
+  access: embedded
+  fields_known: true
+  embedded_in: Template.categories
+  fields:
+  - name: id
+    type: integer
+  - name: name
+    type: string
+  - name: created
+    type: string
+  - name: updated
+    type: string
+- name: Tag
+  access: embedded
+  fields_known: true
+  embedded_in: Template.tags
+  fields:
+  - name: id
+    type: integer
+  - name: name
+    type: string
+  - name: created
+    type: string
+  - name: updated
+    type: string
+- name: Campaign
+  resource: /v2/campaigns
+  access: authenticated
+  fields_known: false
+  http_status_anonymous: 401
+  note: >-
+    Route confirmed to exist (401 missing-credentials, not 404). Field list not readable
+    anonymously. The webhook payload confirms at minimum `id` and `title`.
+  fields_confirmed:
+  - name: id
+  - name: title
+- name: Lead
+  resource: /v2/leads
+  access: authenticated
+  fields_known: partial
+  http_status_anonymous: 401
+  note: >-
+    Attributes taken from the documented webhook payload's `lead` object, which is the vendor's own
+    published representation of a captured lead. The REST representation may differ.
+  fields:
+  - name: email
+  - name: firstName
+  - name: lastName
+  - name: phone
+  - name: ipAddress
+  - name: referrer
+  - name: timestamp
+  - name: privacyConsent
+- name: Site
+  resource: /v2/sites
+  access: authenticated
+  fields_known: false
+  http_status_anonymous: 401
+  sub_resources:
+  - /v2/sites/{siteId}
+  - /v2/sites/origin
+  note: Confirmed by both probe (401) and first-party plugin source (Api::build('v2','sites')).
+- name: Integration
+  resource: /v2/integrations
+  access: authenticated
+  fields_known: false
+  http_status_anonymous: 401
+  note: >-
+    The connection between a campaign and a downstream marketing platform. OptinMonster markets
+    60+ such integrations; the API resource exists but is undocumented.
+- name: Account
+  resource: /v2/account
+  access: authenticated
+  fields_known: false
+  http_status_anonymous: 401
+  sub_resources:
+  - /v2/revenue/{accountId}
+  - /v2/key/regenerate
+- name: Optin
+  resource: /v1/optins
+  access: authenticated
+  fields_known: false
+  http_status_anonymous: 401
+  note: >-
+    The v1-era representation of a campaign, still called by the current WordPress plugin
+    (Api::build('v1','optins','GET')). Coexists with v2 Campaign rather than superseding or being
+    superseded by it.
+relationships:
+- from: Template
+  to: Goal
+  type: has_many
+  via: goals
+  confidence: high
+  evidence: embedded array in the live /v2/templates response
+- from: Template
+  to: Category
+  type: has_many
+  via: categories
+  confidence: high
+  evidence: embedded array in the live /v2/templates response
+- from: Template
+  to: Tag
+  type: has_many
+  via: tags
+  confidence: high
+  evidence: embedded array in the live /v2/templates response
+- from: Template
+  to: Account
+  type: belongs_to
+  via: om_account_id
+  confidence: high
+  evidence: integer id-reference field in the live response
+- from: Template
+  to: Campaign
+  type: has_one
+  via: demo_campaign_slug
+  confidence: medium
+  evidence: slug-shaped reference field; the target resource was not readable anonymously
+- from: Account
+  to: Site
+  type: has_many
+  via: /v2/sites
+  confidence: medium
+  evidence: route hierarchy plus plugin usage
+- from: Site
+  to: Campaign
+  type: has_many
+  via: campaign output settings per site
+  confidence: medium
+  evidence: WordPress plugin assigns campaigns to a site and reads site origins
+- from: Campaign
+  to: Lead
+  type: has_many
+  via: campaign.id on the submitted lead
+  confidence: high
+  evidence: webhook payload carries campaign.id alongside the lead object
+- from: Campaign
+  to: Template
+  type: belongs_to
+  via: template used to create the campaign
+  confidence: medium
+  evidence: product behavior; not exposed as an id field in any readable response
+- from: Campaign
+  to: Integration
+  type: has_many
+  via: /v2/integrations
+  confidence: low
+  evidence: >-
+    Route exists; the direction of the association (campaign-scoped vs account-scoped) could not
+    be established without credentials.
+- from: Account
+  to: Revenue
+  type: has_many
+  via: /v2/revenue/{accountId}
+  confidence: high
+  evidence: "plugin source: Api::build('v2','revenue/'.$accountId)"
+id_conventions:
+  template: lowercase kebab-case slug (popup-canvas)
+  taxonomies: integer surrogate keys
+  account: integer
+  site: integer (path segment /v2/sites/{siteId})
+  prefixed_ids: false
+  note: >-
+    No typed/prefixed id scheme (no `cus_`-style prefixes). Ids are a mix of integers and slugs
+    depending on entity, and the type is not inferable from the value.
+render: null
+gaps:
+- Only one of ten entities has a readable field list; the rest are confirmed-but-opaque.
+- No object reference or schema documentation of any kind.
+- Two entities (Campaign, Optin) appear to model the same thing across v1 and v2 with no stated
+  relationship between them.
+- No id-prefix convention, so ids are not self-describing.

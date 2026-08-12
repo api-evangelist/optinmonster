@@ -1,0 +1,102 @@
+generated: '2026-08-12'
+method: searched
+source: https://optinmonster.com/pricing/
+plan_count: 4
+currency: USD
+billing_period: annual
+note: >-
+  Four self-serve tiers, all quoted as a monthly-equivalent rate but BILLED ANNUALLY with automatic
+  renewal. The page advertises an introductory annual price alongside a higher "normal" annual
+  price; both are recorded so the renewal cliff is visible. The metered unit is campaign
+  IMPRESSIONS per month — campaign views served by the embed script — not API requests. There is no
+  free tier and no API-specific plan: REST API access is not separately priced or gated by tier in
+  anything the pricing page states. No published enterprise tier.
+plans:
+- name: Basic
+  price: 7
+  price_unit: per month
+  currency: USD
+  billing_period: annual
+  annual_price_introductory: 84
+  annual_price_renewal: 210
+  quota:
+    campaign_impressions_per_month: 2500
+    sites: 1
+    campaigns: unlimited
+    subaccounts: 0
+  overage: not published
+  limits:
+  - Basic integrations only
+  - No A/B testing
+  - No Exit Intent technology
+- name: Plus
+  price: 19
+  price_unit: per month
+  currency: USD
+  billing_period: annual
+  annual_price_introductory: 228
+  annual_price_renewal: 570
+  quota:
+    campaign_impressions_per_month: 10000
+    sites: 2
+    campaigns: unlimited
+    subaccounts: 0
+  overage: not published
+  limits:
+  - No Exit Intent technology
+  adds:
+  - A/B testing
+  - Advanced integrations
+  - Full analytics
+- name: Pro
+  price: 29
+  price_unit: per month
+  currency: USD
+  billing_period: annual
+  annual_price_introductory: 348
+  annual_price_renewal: 870
+  quota:
+    campaign_impressions_per_month: 25000
+    sites: 3
+    campaigns: unlimited
+    subaccounts: 2
+  overage: not published
+  adds:
+  - Exit Intent technology
+  - Revenue attribution
+- name: Growth
+  price: 49
+  price_unit: per month
+  currency: USD
+  billing_period: annual
+  annual_price_introductory: 588
+  annual_price_renewal: 1470
+  quota:
+    campaign_impressions_per_month: 100000
+    sites: 5
+    campaigns: unlimited
+    subaccounts: unlimited
+  overage: not published
+  adds:
+  - All features
+  - eCommerce integrations
+metering:
+  unit: campaign impressions
+  period: month
+  api_requests_metered: false
+  note: >-
+    The quota meters campaign views rendered on customer sites, not calls to
+    api.optinmonster.com. No API call allowance, request quota or overage rate is published for
+    any tier, and no rate limit is published either — see
+    rate-limits/optinmonster-rate-limits.yml.
+free_tier: false
+enterprise_tier: false
+api_gated_by_tier: not published
+x-evidence:
+  fetched: '2026-08-12'
+  url: https://optinmonster.com/pricing/
+  http_status: 200
+gaps:
+- No overage pricing published for exceeding the monthly impression allowance.
+- No machine-readable pricing or catalog endpoint.
+- Pricing page does not state which tiers, if any, include REST API access.

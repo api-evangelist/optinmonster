@@ -1,0 +1,96 @@
+generated: '2026-08-12'
+method: probed
+source: live GET probes of /.well-known/* on every OptinMonster host
+note: >-
+  Every /.well-known/ path probed on every OptinMonster host missed. The marketing host
+  (optinmonster.com) returns a WordPress 404 page for all five paths. The API and app hosts
+  (api.optinmonster.com, app.optinmonster.com, api.omwpapi.com) answer 301 to an HTML page reading
+  "Invalid .well-known request" — a deliberate catch-all that serves no document. The frontend CDN
+  (a.omappapi.com / a.omwpapi.com fronts an S3 origin) returns S3 AccessDenied. No WellKnown or
+  SecurityTxt pointer is emitted: this file records a verified ABSENCE, not a presence.
+  OptinMonster does publish a security contact at https://optinmonster.com/security/, but it is on
+  an HTML page, not at the RFC 9116 well-known location — see
+  security/optinmonster-vulnerability-disclosure.yml.
+hosts:
+- host: optinmonster.com
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    note: WordPress 404 HTML page
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: api.optinmonster.com
+  paths:
+  - path: /.well-known/security.txt
+    status: 301
+    file: null
+    note: 301 to an HTML body reading "Invalid .well-known request" — not a document
+  - path: /.well-known/openid-configuration
+    status: 301
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+    file: null
+  - path: /.well-known/api-catalog
+    status: 301
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 301
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 301
+    file: null
+  - path: /.well-known/agent.json
+    status: 301
+    file: null
+- host: app.optinmonster.com
+  paths:
+  - path: /.well-known/security.txt
+    status: 301
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 301
+    file: null
+    note: follows to an HTML body "Invalid .well-known request"
+  - path: /.well-known/agent.json
+    status: 301
+    file: null
+- host: api.omwpapi.com
+  paths:
+  - path: /.well-known/security.txt
+    status: 301
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 301
+    file: null
+- host: a.omptmnstr-cdn
+  paths: []
+  note: >-
+    a.optmnstr.com and a.omappapi.com front an S3 origin; /.well-known/* returns 403 AccessDenied
+    XML or a 301. No document served.
+summary:
+  paths_probed: 26
+  documents_found: 0
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: false
+  api_catalog: false
+  ai_plugin: false
+  agent_card: false

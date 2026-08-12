@@ -1,0 +1,114 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://optinmonster.com/docs/how-the-optinmonster-api-key-works-with-wordpress/ ;
+  https://plugins.svn.wordpress.org/optinmonster/trunk/OMAPI/Api.php ;
+  live OPTIONS preflight against https://api.optinmonster.com/v2/campaigns
+docs: https://optinmonster.com/docs/how-the-optinmonster-api-key-works-with-wordpress/
+note: >-
+  OptinMonster publishes no OpenAPI, so this profile is assembled from three real sources: the
+  help-center API-key article, the first-party WordPress plugin source (OMAPI/Api.php, which builds
+  every request the vendor's own client makes), and a live CORS preflight whose
+  `access-control-allow-headers` enumerates every credential header the API accepts. There is no
+  OAuth 2.0 and no OpenID Connect surface anywhere on the platform — key auth only — so no
+  scopes/ artifact is emitted.
+summary:
+  schemes: 2
+  primary: api-key-header
+  oauth2: false
+  openid_connect: false
+  mtls: false
+  scopes: false
+securitySchemes:
+- id: apiKeyHeader
+  type: apiKey
+  in: header
+  name: X-OptinMonster-ApiKey
+  primary: true
+  description: >-
+    The account API key, issued in the OptinMonster app under My Account > API. Sent on every
+    request as the `X-OptinMonster-ApiKey` header. The API may also return this header on a
+    response, which the WordPress plugin captures to upgrade a legacy credential pair to a key.
+  evidence:
+  - source: plugin-source
+    detail: "OMAPI/Api.php line 260: $headers['X-OptinMonster-ApiKey'] = $this->apikey;"
+    url: https://plugins.svn.wordpress.org/optinmonster/trunk/OMAPI/Api.php
+  - source: cors-preflight
+    detail: >-
+      OPTIONS https://api.optinmonster.com/v2/campaigns returns
+      access-control-allow-headers including X-OptinMonster-ApiKey
+    http_status: 200
+- id: legacyKeyUser
+  type: apiKey
+  in: query
+  name: omapi-key
+  primary: false
+  deprecated: true
+  description: >-
+    The legacy credential pair — an API key plus an API username — carried as `omapi-key` (and a
+    paired user value) in the request body/query rather than as a header. Still accepted, but the
+    help-center article states an API key is no longer required to connect the WordPress plugin,
+    and the plugin migrates a legacy pair to the header key on first successful call.
+  evidence:
+  - source: plugin-source
+    detail: "OMAPI/Api.php line 223: 'omapi-key' => $this->key"
+    url: https://plugins.svn.wordpress.org/optinmonster/trunk/OMAPI/Api.php
+accepted_auth_headers:
+  note: >-
+    Read verbatim from the live `access-control-allow-headers` on an OPTIONS preflight. Presence in
+    this list means the edge will accept the header cross-origin; it does not prove every one is an
+    active credential path. X-OptinMonster-ApiKey is the one the vendor's own client uses.
+  observed:
+  - X-OptinMonster-ApiKey
+  - X-OptinMonster-SKey
+  - Bearer-Token
+  - X-Auth-Token
+  - Authorization
+  - Auth
+  - X-CSRF-Token
+  - X-XSRF-Token
+  fetched: '2026-08-12'
+  url: https://api.optinmonster.com/v2/campaigns
+  http_status: 200
+context_headers:
+  note: >-
+    Not credentials — identification/telemetry headers the first-party WordPress client sends
+    alongside the key, and which the edge explicitly allows.
+  headers:
+  - name: OMAPI-Referer
+    value: the calling site URL
+  - name: OMAPI-Sender
+    value: WordPress
+  - name: OMAPI-Site
+    value: the WordPress blog name
+  - name: OMAPI-Version
+    value: the plugin version
+  - name: OMAPI-Plugins
+    value: active-plugin fingerprint
+  - name: X-OptinMonster-UrlPath
+  - name: X-OptinMonster-Campaigns
+  - name: X-SC-Touchpoint
+unauthenticated_surface:
+- path: /v2/templates
+  method: GET
+  http_status: 200
+  description: >-
+    The campaign template catalog is served without any credential — 697 template objects,
+    1.27 MB, on 2026-08-12. The only anonymous data endpoint found.
+  fetched: '2026-08-12'
+key_management:
+  issue: https://app.optinmonster.com/ (My Account > API)
+  rotate: >-
+    POST v2/key/regenerate — the plugin calls this to regenerate the account key.
+  revoke: undocumented publicly
+webhook_auth:
+  supported: false
+  note: >-
+    Outbound webhooks carry no authentication. The docs state verbatim "At this time we do not
+    support Authentication for Webhook." Receivers must validate by other means.
+  source: https://optinmonster.com/docs/how-to-connect-optinmonster-with-a-webhook/
+gaps:
+- No OpenAPI or public API reference documents the authentication scheme; the header name is
+  discoverable only from the plugin source or a CORS preflight.
+- No OAuth 2.0, so no delegated/third-party authorization and no scope model.
+- Webhook deliveries are unauthenticated and unsigned.
