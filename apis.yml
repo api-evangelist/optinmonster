@@ -16,7 +16,7 @@ url: https://raw.githubusercontent.com/api-evangelist/optinmonster/refs/heads/ma
 image: https://cdn.optinmonster.com/wp-content/uploads/2024/05/cropped-archie-1-192x192.png
 x-type: company
 x-source: harvest:marketing-integration-graph
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
