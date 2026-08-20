@@ -27,6 +27,17 @@ tags:
 - Email Marketing
 - Popups
 - WordPress
+- Webhook
+- Software-as-a-Service
+- Marketing Automation
+tags_raw:
+- Company
+- Lead Generation
+- Marketing
+- Conversion Optimization
+- Email Marketing
+- Popups
+- WordPress
 - Webhooks
 - SaaS
 - Marketing Automation
@@ -87,6 +98,10 @@ apis:
   humanURL: https://optinmonster.com/docs/optinmonster-javascript-events-api/
   baseURL: https://a.omappapi.com
   tags:
+  - JavaScript
+  - Event
+  - Embedded
+  tags_raw:
   - JavaScript
   - Events
   - Embedded
