@@ -13,6 +13,17 @@ description: >-
   conversion and analytics; and an outbound webhook that POSTs captured lead data to a customer
   endpoint. Leads are routed to more than sixty marketing platforms through built-in integrations.
 url: https://raw.githubusercontent.com/api-evangelist/optinmonster/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.optinmonster.com/wp-content/uploads/2024/05/cropped-archie-1-192x192.png
 x-type: company
 x-source: harvest:marketing-integration-graph
