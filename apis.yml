@@ -1,17 +1,15 @@
 aid: optinmonster
 name: OptinMonster
-description: >-
-  OptinMonster is a lead-generation and conversion-optimization SaaS from Awesome Motive that
-  serves on-site campaigns — popups, floating bars, slide-ins, fullscreen fills, inline forms and
-  gamified spin-to-win wheels — targeted by display rules such as Exit Intent, page-level
-  targeting, geolocation, referrer and on-site behavior. Campaigns are built in a hosted visual
-  builder at app.optinmonster.com and rendered on customer sites by a JavaScript embed served from
-  the a.omappapi.com CDN. The platform exposes a private-key REST API at api.optinmonster.com
-  (v1 and v2) and a mirror at api.omwpapi.com used by the first-party WordPress plugin, covering
-  campaigns, leads, sites, integrations, revenue attribution and templates; a client-side
-  JavaScript Events API of roughly sixty `om.*` lifecycle events for hooking campaign display,
-  conversion and analytics; and an outbound webhook that POSTs captured lead data to a customer
-  endpoint. Leads are routed to more than sixty marketing platforms through built-in integrations.
+description: OptinMonster is a lead-generation and conversion-optimization SaaS from Awesome Motive that
+  serves on-site campaigns — popups, floating bars, slide-ins, fullscreen fills, inline forms and gamified
+  spin-to-win wheels — targeted by display rules such as Exit Intent, page-level targeting, geolocation,
+  referrer and on-site behavior. Campaigns are built in a hosted visual builder at app.optinmonster.com
+  and rendered on customer sites by a JavaScript embed served from the a.omappapi.com CDN. The platform
+  exposes a private-key REST API at api.optinmonster.com (v1 and v2) and a mirror at api.omwpapi.com used
+  by the first-party WordPress plugin, covering campaigns, leads, sites, integrations, revenue attribution
+  and templates; a client-side JavaScript Events API of roughly sixty `om.*` lifecycle events for hooking
+  campaign display, conversion and analytics; and an outbound webhook that POSTs captured lead data to
+  a customer endpoint. Leads are routed to more than sixty marketing platforms through built-in integrations.
 url: https://raw.githubusercontent.com/api-evangelist/optinmonster/refs/heads/main/apis.yml
 x-api-posture: no-product-api
 x-api-posture-basis: observed
@@ -70,14 +68,12 @@ tags_raw:
 - SaaS
 - Marketing Automation
 apis:
-- aid: optinmonster-rest-api
+- aid: optinmonster:optinmonster-rest-api
   name: OptinMonster REST API
-  description: >-
-    The OptinMonster application REST API. Versioned path segments (`/v1`, `/v2`) sit on
-    api.optinmonster.com and cover campaigns, leads, sites, site origins, integrations, account,
-    revenue attribution and the public template catalog. Authenticated with an account API key
-    supplied in the `X-OptinMonster-ApiKey` header (legacy `omapi-key` + user pairing is still
-    accepted). Responses are JSON; errors use a consistent
+  description: The OptinMonster application REST API. Versioned path segments (`/v1`, `/v2`) sit on api.optinmonster.com
+    and cover campaigns, leads, sites, site origins, integrations, account, revenue attribution and the
+    public template catalog. Authenticated with an account API key supplied in the `X-OptinMonster-ApiKey`
+    header (legacy `omapi-key` + user pairing is still accepted). Responses are JSON; errors use a consistent
     `{error, code, message, status}` envelope with numeric OptinMonster codes.
   humanURL: https://optinmonster.com/docs/
   baseURL: https://api.optinmonster.com/v2
@@ -96,14 +92,13 @@ apis:
     url: rate-limits/optinmonster-rate-limits.yml
   - type: DataModel
     url: data-model/optinmonster-data-model.yml
-- aid: optinmonster-wordpress-plugin-api
+- aid: optinmonster:optinmonster-wordpress-plugin-api
   name: OptinMonster WordPress Plugin API
-  description: >-
-    The API host the first-party OptinMonster WordPress plugin calls (`OPTINMONSTER_API_URL`).
-    Serves the same versioned surface and error envelope as api.optinmonster.com — `v1/optins`,
-    `v1/verify`, `v2/sites`, `v2/sites/origin`, `v2/sites/{siteId}`, `v2/key/regenerate` and
-    `v2/revenue/{accountId}` — and additionally accepts the `OMAPI-Referer`, `OMAPI-Sender`,
-    `OMAPI-Site`, `OMAPI-Version` and `OMAPI-Plugins` context headers the plugin sends.
+  description: The API host the first-party OptinMonster WordPress plugin calls (`OPTINMONSTER_API_URL`).
+    Serves the same versioned surface and error envelope as api.optinmonster.com — `v1/optins`, `v1/verify`,
+    `v2/sites`, `v2/sites/origin`, `v2/sites/{siteId}`, `v2/key/regenerate` and `v2/revenue/{accountId}`
+    — and additionally accepts the `OMAPI-Referer`, `OMAPI-Sender`, `OMAPI-Site`, `OMAPI-Version` and
+    `OMAPI-Plugins` context headers the plugin sends.
   humanURL: https://wordpress.org/plugins/optinmonster/
   baseURL: https://api.omwpapi.com
   tags:
@@ -114,15 +109,14 @@ apis:
     url: https://plugins.svn.wordpress.org/optinmonster/trunk/
   - type: ChangeLog
     url: https://plugins.svn.wordpress.org/optinmonster/trunk/CHANGELOG.md
-- aid: optinmonster-javascript-events-api
+- aid: optinmonster:optinmonster-javascript-events-api
   name: OptinMonster JavaScript Events API
-  description: >-
-    A client-side event API exposed by the OptinMonster embed script (served from
-    a.omappapi.com/app/js/api.min.js). Roughly sixty documented `om.*` events fire across campaign
-    initialization, display-rule evaluation, show/close, view changes, form validation, conversion
-    success/error, analytics impressions and conversions, and campaign actions. Handlers are bound
-    with `document.addEventListener` and receive the campaign object, letting integrators suppress
-    campaigns, mutate markup, or forward conversions to their own analytics.
+  description: A client-side event API exposed by the OptinMonster embed script (served from a.omappapi.com/app/js/api.min.js).
+    Roughly sixty documented `om.*` events fire across campaign initialization, display-rule evaluation,
+    show/close, view changes, form validation, conversion success/error, analytics impressions and conversions,
+    and campaign actions. Handlers are bound with `document.addEventListener` and receive the campaign
+    object, letting integrators suppress campaigns, mutate markup, or forward conversions to their own
+    analytics.
   humanURL: https://optinmonster.com/docs/optinmonster-javascript-events-api/
   baseURL: https://a.omappapi.com
   tags:
@@ -199,13 +193,11 @@ x-enrichment:
 x-coverage:
   state: covered
   reason: null
-  detail: >-
-    A real, live REST API was found and mapped by probe (api.optinmonster.com v1/v2 plus the
-    api.omwpapi.com mirror named in the first-party WordPress plugin source), along with a
-    provider-published llms.txt, a documented outbound webhook, a dated plugin changelog and
-    published pricing. OptinMonster publishes no OpenAPI and no public API reference, so the
-    contract here was recovered from live probes and first-party plugin code rather than from a
-    spec.
+  detail: A real, live REST API was found and mapped by probe (api.optinmonster.com v1/v2 plus the api.omwpapi.com
+    mirror named in the first-party WordPress plugin source), along with a provider-published llms.txt,
+    a documented outbound webhook, a dated plugin changelog and published pricing. OptinMonster publishes
+    no OpenAPI and no public API reference, so the contract here was recovered from live probes and first-party
+    plugin code rather than from a spec.
   evidence:
   - url: https://api.optinmonster.com/v2/campaigns
     status: 401
