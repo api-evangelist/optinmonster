@@ -1,10 +1,28 @@
-generated: '2026-10-15'
+generated: '2026-10-20'
 method: searched
+source:
+- shopify/integrations/shopify-integration-edges.yml
+- https://zapier.com/apps/optinmonster/integrations
 checked:
 - https://zapier.com/api/v4/apps/
 - shopify/integrations/shopify-integration-edges.yml
-source:
-- shopify/integrations/shopify-integration-edges.yml
+- https://composio.dev/toolkits/optinmonster
+- https://monid.ai/tools/optinmonster
+- https://n8n.io/integrations/optinmonster/
+- https://zapier.com/apps/optinmonster/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: optinmonster
+  url: https://zapier.com/apps/optinmonster/integrations
+  external_url: https://optinmonster.com/
+  partner_tier: SILVER
+  triggers:
+  - key: lead
+    label: New Lead
+  actions: []
+  searches: []
 edges:
 - partner_name: Shopify (own)
   partner: shopify
@@ -49,3 +67,425 @@ edges:
     builder: unknown (not in the directory record)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Constant Contact
+  partner: constant-contact
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/constant-contact
+  direction: third-party
+  category: Email Newsletters
+  partner_url: http://www.constantcontact.com/signup.jsp?pn=zapier
+- partner_name: Force24
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/force24
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://www.force24.co.uk/
+- partner_name: Mailchimp
+  partner: mailchimp
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/mailchimp
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://mailchimp.com/
+- partner_name: Delivra
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/delivra
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://www.delivra.com/
+- partner_name: SendGrid
+  partner: sendgrid
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/sendgrid
+  direction: third-party
+  category: Transactional Email
+  partner_url: https://sendgrid.com/
+- partner_name: Iterable
+  partner: iterable
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/iterable
+  direction: third-party
+  category: Email Newsletters
+  partner_url: https://iterable.com/
+- partner_name: RD Station
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/rd-station
+  direction: third-party
+  category: Marketing Automation
+  partner_url: http://www.rdstation.com.br/
+- partner_name: Cliengo
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/cliengo
+  direction: third-party
+  category: Contact Management
+  partner_url: https://www.cliengo.com/
+- partner_name: AdRoll
+  partner: adroll
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/adroll
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://zapier.com/www.adroll.com
+- partner_name: Podium
+  partner: podium
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/podium
+  direction: third-party
+  category: Communication
+  partner_url: https://www.podium.com/
+- partner_name: Sendy
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/sendy
+  direction: third-party
+  category: Email Newsletters
+  partner_url: https://sendy.co/
+- partner_name: IP2Location
+  partner: ip2location
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/ip2location
+  direction: third-party
+  category: Developer Tools
+  partner_url: https://www.ip2location.com/web-service
+- partner_name: Mailmodo
+  partner: mailmodo
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/mailmodo
+  direction: third-party
+  category: Marketing
+  partner_url: https://mailmodo.com/
+- partner_name: EmailOctopus
+  partner: emailoctopus
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/emailoctopus
+  direction: third-party
+  category: Email Newsletters
+  partner_url: https://emailoctopus.com/account/sign-up
+- partner_name: EveryAction
+  partner: bonterra-fka-everyaction
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/everyaction
+  direction: third-party
+  category: Contact Management
+  partner_url: https://www.everyaction.com/
+- partner_name: Referrizer
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/referrizer
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://www.referrizer.com/
+- partner_name: Twilio
+  partner: twilio
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/twilio
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://www.twilio.com/
+- partner_name: GetResponse
+  partner: getresponse
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/getresponse
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://www.getresponse.com/
+- partner_name: Salesmate
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/salesmate
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: http://salesmate.io/
+- partner_name: magnews
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/magnews
+  direction: third-party
+  category: Communication
+  partner_url: https://www.magnews.com/integrazioni/zapier-connector/
+- partner_name: Flexie CRM
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/flexie-crm
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://flexie.io/
+- partner_name: Wufoo
+  partner: wufoo
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/wufoo
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.wufoo.com/
+- partner_name: Clearbit
+  partner: clearbit
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/clearbit
+  direction: third-party
+  category: Contact Management
+  partner_url: https://clearbit.com/zapier?utm_source=zapier&utm_medium=referral&utm_campaign=partner
+- partner_name: Kickbox
+  partner: kickbox
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/kickbox
+  direction: third-party
+  category: Email
+  partner_url: https://kickbox.com/
+- partner_name: rasa.io
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/rasaio
+  direction: third-party
+  category: Email Newsletters
+  partner_url: https://rasa.io/
+- partner_name: Nemonic
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/nemonic
+  direction: third-party
+  category: Printing
+  partner_url: https://www.nemonic.me/
+- partner_name: LinkedIn
+  partner: linkedin-ads
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/linkedin
+  direction: third-party
+  category: Microsoft
+  partner_url: http://www.linkedin.com/
+- partner_name: Levitate
+  partner: levitate
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/levitate
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://levitate.ai/
+- partner_name: Invoiced
+  partner: invoiced
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/invoiced
+  direction: third-party
+  category: Accounting
+  partner_url: https://invoiced.com/
+- partner_name: Direct Mail
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/optinmonster/integrations/direct-mail
+  direction: third-party
+  category: Email Newsletters
+  partner_url: http://directmailmac.com/
+templates:
+- title: Create new beehiiv subscribers from new leads in OptinMonster
+  url: https://zapier.com/apps/beehiiv/integrations/optinmonster/1754517/create-new-beehiiv-subscribers-from-new-leads-in-optinmonster
+  apps:
+  - optinmonster
+  - beehiiv
+- title: Add new OptinMonster leads as people on Pipedrive
+  url: https://zapier.com/apps/optinmonster/integrations/pipedrive/50080/add-new-optinmonster-leads-as-people-on-pipedrive
+  apps:
+  - optinmonster
+  - pipedrive
+- title: Create contacts in Constant Contact from new OptinMonster leads
+  url: https://zapier.com/apps/constant-contact/integrations/optinmonster/1002626/create-contacts-in-constant-contact-from-new-optinmonster-leads
+  apps:
+  - optinmonster
+  - constant-contact
+- title: Add new OptinMonster leads to Klaviyo as subscribers
+  url: https://zapier.com/apps/klaviyo/integrations/optinmonster/1437909/add-new-optinmonster-leads-to-klaviyo-as-subscribers
+  apps:
+  - optinmonster
+  - klaviyo
+- title: Add new OptinMonster leads as Mailchimp subscribers
+  url: https://zapier.com/apps/mailchimp/integrations/optinmonster/53575/add-new-optinmonster-leads-as-mailchimp-subscribers
+  apps:
+  - optinmonster
+  - mailchimp
+- title: Add or update Brevo contacts when new OptinMonster leads come in
+  url: https://zapier.com/apps/brevo/integrations/optinmonster/1754318/add-or-update-brevo-contacts-when-new-optinmonster-leads-come-in
+  apps:
+  - optinmonster
+  - brevo
+- title: Send emails from Zapier to new OptinMonster leads
+  url: https://zapier.com/apps/email/integrations/optinmonster/50073/send-emails-from-zapier-to-new-optinmonster-leads
+  apps:
+  - optinmonster
+  - email
+- title: Create Kajabi Form submissions from new OptinMonster leads
+  url: https://zapier.com/apps/kajabi/integrations/optinmonster/50074/create-kajabi-form-submissions-from-new-optinmonster-leads
+  apps:
+  - optinmonster
+  - kajabi
+- title: Send Gmail emails to new OptinMonster leads
+  url: https://zapier.com/apps/gmail/integrations/optinmonster/50075/send-gmail-emails-to-new-optinmonster-leads
+  apps:
+  - optinmonster
+  - gmail
+- title: Add new OptinMonster leads as records to an Airtable table
+  url: https://zapier.com/apps/airtable/integrations/optinmonster/50076/add-new-optinmonster-leads-as-records-to-an-airtable-table
+  apps:
+  - optinmonster
+  - airtable
+- title: Add new OptinMonster leads to a Google Sheet
+  url: https://zapier.com/apps/google-sheets/integrations/optinmonster/50078/add-new-optinmonster-leads-to-a-google-sheet
+  apps:
+  - optinmonster
+  - google-sheets
+- title: Create or update HubSpot CRM contacts from new OptinMonster leads
+  url: https://zapier.com/apps/hubspot/integrations/optinmonster/50079/create-or-update-hubspot-crm-contacts-from-new-optinmonster-leads
+  apps:
+  - optinmonster
+  - hubspot
+template_total: 888
