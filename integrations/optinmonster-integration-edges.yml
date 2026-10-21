@@ -10,6 +10,7 @@ checked:
 - https://monid.ai/tools/optinmonster
 - https://n8n.io/integrations/optinmonster/
 - https://zapier.com/apps/optinmonster/integrations
+- hubspot/integrations/hubspot-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -24,24 +25,6 @@ marketplace_apps:
   actions: []
   searches: []
 edges:
-- partner_name: Shopify (own)
-  partner: shopify
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://apps.shopify.com/optinmonster
-  mirror_of: shopify/integrations/shopify-integration-edges.yml
-  apps:
-  - OptinMonster Email Popups
-  listing_count: 1
-  detected: '2026-10-15'
-  detected_by: mirror-platform-listings.py
-  publisher_verified:
-  - Built for Shopify
 - partner_name: Zapier
   partner: zapier
   partner_match: aggregator
@@ -427,6 +410,41 @@ edges:
   direction: third-party
   category: Email Newsletters
   partner_url: http://directmailmac.com/
+- partner_name: Shopify (own)
+  partner: shopify
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://apps.shopify.com/optinmonster
+  mirror_of: shopify/integrations/shopify-integration-edges.yml
+  apps:
+  - OptinMonster Email Popups
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  publisher_verified:
+  - Built for Shopify
+- partner_name: HubSpot (own)
+  partner: hubspot
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://ecosystem.hubspot.com/marketplace/listing/optinmonster
+  mirror_of: hubspot/integrations/hubspot-integration-edges.yml
+  apps:
+  - OptinMonster
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: LEAD_SCORING_ROUTING
 templates:
 - title: Create new beehiiv subscribers from new leads in OptinMonster
   url: https://zapier.com/apps/beehiiv/integrations/optinmonster/1754517/create-new-beehiiv-subscribers-from-new-leads-in-optinmonster
