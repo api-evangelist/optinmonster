@@ -64,5 +64,116 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-OptinMonster is a company surfaced via the API Evangelist harvest backlog (source: marketing-integration-graph) and added to the network as a stub for full-pipeline profiling.
-- https://optinmonster.com/
+OptinMonster is a lead-generation and conversion-optimization SaaS from Awesome Motive that serves on-site campaigns — popups, floating bars, slide-ins, fullscreen fills, inline forms and gamified spin-to-win wheels — targeted by display rules such as Exit Intent, page-level targeting, geolocation, referrer and on-site behavior. Campaigns are built in a hosted visual builder at app.optinmonster.com and rendered on customer sites by a JavaScript embed served from the a.omappapi.com CDN. The platform exposes a private-key REST API at api.optinmonster.com (v1 and v2) and a mirror at api.omwpapi.com used by the first-party WordPress plugin, covering campaigns, leads, sites, integrations, revenue attribution and templates; a client-side JavaScript Events API of roughly sixty `om.*` lifecycle events for hooking campaign display, conversion and analytics; and an outbound webhook that POSTs captured lead data to a customer endpoint. Leads are routed to more than sixty marketing platforms through built-in integrations.
+
+**Areas:** Company · Lead Generation · Marketing · Conversion Optimization · Email Marketing · Popups · WordPress · Webhook · Software-as-a-Service · Marketing Automation
+
+## OptinMonster on APIs.io
+
+Everything profiled for OptinMonster is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/optinmonster/](https://apis.io/providers/optinmonster/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [OptinMonster REST API](https://apis.io/apis/optinmonster/optinmonster-rest-api/) — The OptinMonster application REST API. Versioned path segments (`/v1`, `/v2`) sit on api.optinmonster.com and cover campaigns, leads, sites, site origins,…
+- [OptinMonster WordPress Plugin API](https://apis.io/apis/optinmonster/optinmonster-wordpress-plugin-api/) — The API host the first-party OptinMonster WordPress plugin calls (`OPTINMONSTER_API_URL`). Serves the same versioned surface and error envelope as…
+- [OptinMonster JavaScript Events API](https://apis.io/apis/optinmonster/optinmonster-javascript-events-api/) — A client-side event API exposed by the OptinMonster embed script (served from a.omappapi.com/app/js/api.min.js). Roughly sixty documented `om.*` events fire…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Optinmonster Webhooks](https://apis.io/asyncapis/optinmonster/optinmonster-webhooks/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Optinmonster Authentication](https://apis.io/security/optinmonster/optinmonster-authentication/)
+- [Optinmonster Domain Security](https://apis.io/security/optinmonster/optinmonster-domain-security/)
+- [Optinmonster Vulnerability Disclosure](https://apis.io/security/optinmonster/optinmonster-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Optinmonster Plans Pricing](https://apis.io/plans/optinmonster/optinmonster-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Optinmonster Rate Limits](https://apis.io/rate-limits/optinmonster/optinmonster-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://optinmonster.com/)
+- [Documentation](https://optinmonster.com/docs/)
+- [Getting started](https://optinmonster.com/docs/getting-started-optinmonster-wordpress-checklist/)
+- [Pricing](https://optinmonster.com/pricing/)
+- [Sign up](https://app.optinmonster.com/)
+- [Support](https://optinmonster.com/support/)
+- [Blog](https://optinmonster.com/blog/)
+- [Security](https://optinmonster.com/security/)
+- [Terms of service](https://optinmonster.com/terms/)
+- [Privacy policy](https://optinmonster.com/privacy/)
+
+## API Evangelist rating
+
+**Kin Score 52.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 39.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 39.5 |
+| Developer ergonomics | 57.1 |
+| Access clarity | 76.3 |
+
+**Agent readiness 25.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/optinmonster/](https://apis.io/providers/optinmonster/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for OptinMonster: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/optinmonster/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
